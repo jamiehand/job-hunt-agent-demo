@@ -32,5 +32,6 @@ If one of these files is missing, say so and ask before creating it. Don't inven
 - Never send outreach or applications, or submit forms, on the user's behalf. Draft them for review.
 - Start resume bullets with strong action verbs.
 - Save outreach and follow-up drafts in `outreach/` and weekly reports in `weekly_reports/`, named with the date as described in the workflow. Put other working files (company research, tailored resumes and cover letters) in this folder, one file per subject, in Markdown.
-- Never commit `.env` or other secrets. `.gitignore` already excludes them.
+- API keys live only in `.env` (git-ignored, owner-only permissions). `.env.example` lists the variable names with placeholder values: `ANTHROPIC_API_KEY`, `SEARCHAPI_API_KEY`, `SERPAPI_API_KEY`.
+- Use a key by loading it from the environment, for example `set -a; source .env; set +a` before a command. Never print, log or echo a key, never put it in a file other than `.env` or in a URL you share, and never commit it. To check a key is set, test that it's non-empty without showing it.
 - Save lasting decisions back to the claude.ai project as well as this folder.
