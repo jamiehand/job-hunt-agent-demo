@@ -1,0 +1,95 @@
+# Weekly Job Hunt Workflow
+
+Run these steps in order, once a week. `job_search_profile.md` decides fit; if it conflicts with this file, the profile wins.
+
+**Hard rules:** Don't send, submit or sign in to anything. Link a source for every fact about a company, role or person, and mark what you inferred with _(inferred)_. Never delete leads or the user's notes. If you get stuck, add a question to the report and carry on.
+
+## A. Set up (inputs: profile, leads, run prompt)
+
+1. Set `DATE` to today's date in YYYY-MM-DD format.
+2. Read `job_search_profile.md`. Write down:
+   - Roles: technical account manager (TAM) and customer success manager (CSM).
+   - Must-haves: one of those roles, and fully remote.
+   - Industries: sustainability / climate tech, cybersecurity, ethical / responsible AI, healthtech.
+   - Unset items: if seniority is unset, include all levels. If the country is unset, assume US and mark it _(inferred)_.
+3. Read `job_leads.md`. Make a list of the company and role pairs already there, to check for duplicates.
+4. Read the "This week's notes" line in `weekly_run_prompt.md` and follow anything it says.
+
+## B. Follow up on existing leads (output: follow-up drafts)
+
+5. For each active lead with a **Due** date on or before `DATE + 6 days`:
+   - If its status is `Reaching out`, `Applied` or `In conversation`, draft a follow-up and save it as `outreach/DATE_company_person.md`. Base it only on what's in the lead's log.
+   - For any other status, add its next action to the report.
+6. Open the posting link for every active lead. If the posting has been taken down, add a log entry "Posting taken down" and flag it in the report. Don't close the lead.
+7. Flag every active lead whose most recent log entry is more than 21 days old as **stale**.
+
+## C. Find new leads (output: up to 30 candidate postings)
+
+8. Run these web searches, 8 in total (each target role with each target industry):
+   - `"technical account manager" remote <industry>`
+   - `"customer success manager" remote <industry>`
+9. Run these searches without an industry:
+   - `"technical customer success manager" remote`
+   - `"customer success engineer" remote`
+   - `"strategic customer success manager" remote`
+10. If the profile lists target companies, open each one's careers page and look for TAM or CSM roles.
+11. Keep postings dated within the last 14 days. Drop postings that are undated and look closed.
+12. Drop any company and role pair that's already in `job_leads.md`.
+13. Stop collecting after 30 candidates. Note in the report if you stopped early.
+
+## D. Screen and score (output: scored leads, each with a one-line reason)
+
+14. Open each candidate posting and check:
+    - **Role:** the responsibilities are post-sale and customer-facing (account ownership, adoption, renewals, technical escalations). If the role is mainly pre-sales, quota-carrying sales or implementation only, it's **Out**.
+    - **Remote:** the posting says fully remote. If it requires regular office days or says hybrid, it's **Out**. If it's unclear, note "remote: unclear".
+15. Score the leads that pass:
+    - **High:** a target role, fully remote, and a target industry.
+    - **Medium:** a target role and fully remote, but an adjacent industry, or remote is unclear.
+    - **Low:** passes the must-haves, but the role is only a partial match (for example, CSM duties within a support role).
+16. For each lead, write: `Fit: <score>: <one-line reason>`. If you judged the industry from the company's website rather than the posting, mark it _(inferred)_.
+17. Count the **Out** leads and their reasons for the report. Don't add them to `job_leads.md`.
+
+## E. Research High-fit leads (output: company notes and contacts)
+
+18. For each **High** lead, write 2 to 3 lines about the company: what it does, its size or funding stage, and any news from the last 6 months. Link a source for each line.
+19. Find 1 to 3 contacts for each **High** lead, in this order of preference:
+    1. The hiring manager, if the posting names them.
+    2. Head or director of Customer Success, Support or Technical Account Management.
+    3. A current TAM or CSM at the company.
+    4. Anyone connected to the networking contacts in the profile.
+20. Use only public pages. Record each contact's name, title and source link. Unless the posting names them, mark their role in hiring _(inferred)_.
+21. Skip Medium and Low leads unless this week's notes ask for them.
+
+## F. Draft outreach (output: `outreach/DATE_company_person.md` files)
+
+22. For each contact from step 19, create `outreach/DATE_company_person.md` with:
+    - **Header:** the contact's name, title and source link, the related lead, and the suggested channel (LinkedIn or email).
+    - **Message:** under 120 words. Ask for a 15-minute conversation, not a job. Mention one sourced detail about the person or company and one strength from the profile.
+    - `[placeholders]` for anything you don't know, such as how the user knows a mutual connection.
+23. Don't send anything.
+
+## G. Update job_leads.md (output: updated leads file)
+
+24. Add each new High, Medium or Low lead to **Active leads** with: company, role, location, fit, status `New`, a next action, a due date (`DATE + 7 days`) and the posting link.
+25. Add a notes section for each new lead at the top of **Lead notes** with: the date added, the fit reason, contacts (High leads only), and the log entry `DATE: Added by weekly run`.
+26. For each existing lead you touched, add a dated log entry, and update its next action and due date.
+27. Change a lead's status only when the user confirms it (for example, that they sent a message). Never set `Closed` yourself.
+28. The first time you add a real lead, delete the example row and the example notes section.
+
+## H. Report (output: `weekly_reports/DATE.md` and a summary in chat)
+
+29. Write `weekly_reports/DATE.md` with these sections:
+    1. **Summary:** postings reviewed, leads added (High, Medium and Low counts), Out leads and their top reasons.
+    2. **New High-fit leads:** company, role, a one-line reason, and the link.
+    3. **Existing leads:** status changes, postings taken down, stale leads.
+    4. **Drafts to review:** the file paths of this run's files in `outreach/`.
+    5. **Top 3 actions this week:** specific, ordered by priority.
+    6. **Questions for you:** missing profile items, unclear postings, decisions needed.
+30. Post the same report in chat.
+
+## Done when
+
+- [ ] `job_leads.md` is updated, and no lead is listed twice.
+- [ ] Every High lead has contacts and an outreach draft.
+- [ ] `weekly_reports/DATE.md` exists and has all six sections.
+- [ ] Nothing was sent, submitted or signed in to.
