@@ -13,7 +13,7 @@ Run these steps in order, once a week. `job_search_profile.md` decides fit; if i
    - Industries: sustainability / climate tech, cybersecurity, ethical / responsible AI, healthtech.
    - Unset items: if seniority is unset, include all levels. If the country is unset, assume US and mark it _(inferred)_.
 3. Read `job_leads.md`. Make a list of the company and role pairs already there, to check for duplicates.
-4. Read the "This week's notes" line in `weekly_run_prompt.md` and follow anything it says.
+4. Follow the "This week's focus" line in the prompt the user pasted, if it says anything other than "none". If the prompt changes a step in this workflow, the prompt wins for that run.
 
 ## B. Follow up on existing leads (output: follow-up drafts)
 
@@ -59,7 +59,7 @@ Run these steps in order, once a week. `job_search_profile.md` decides fit; if i
     3. A current TAM or CSM at the company.
     4. Anyone connected to the networking contacts in the profile.
 20. Use only public pages. Record each contact's name, title and source link. Unless the posting names them, mark their role in hiring _(inferred)_.
-21. Skip Medium and Low leads unless this week's notes ask for them.
+21. Skip Medium and Low leads unless this week's focus asks for them.
 
 ## F. Draft outreach (output: `outreach/DATE_company_person.md` files)
 
