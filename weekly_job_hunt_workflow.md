@@ -17,11 +17,12 @@ Run these steps in order, once a week. `job_search_profile.md` decides fit; if i
 
 ## B. Follow up on existing leads (output: follow-up drafts)
 
-5. For each active lead with a **Due** date on or before `DATE + 6 days`:
-   - If its status is `Reaching out`, `Applied` or `In conversation`, draft a follow-up and save it as `outreach/DATE_company_person.md`. Base it only on what's in the lead's log.
-   - For any other status, add its next action to the report.
-6. Open the posting link for every active lead. If the posting has been taken down, add a log entry "Posting taken down" and flag it in the report. Don't close the lead.
-7. Flag every active lead whose most recent log entry is more than 21 days old as **stale**.
+5. Check every lead whose **OutreachStatus** isn't `Closed`:
+   - `Sent` or `Applied`, with the newest **Notes** entry more than 7 days old: draft a follow-up and save it as `outreach/DATE_company_person.md`. Base it only on what's in **Notes**.
+   - `Drafted`: remind the user in the report that the draft is waiting for their review.
+   - `Replied` or `In conversation`: add the lead to the report so the user can decide the next step.
+6. Open the **Link** for each of these leads. If the posting has been taken down, add the note `DATE: Posting taken down` and flag it in the report. Don't close the lead.
+7. Flag every lead whose newest **Notes** entry is more than 21 days old as **stale**.
 
 ## C. Find new leads (output: up to 30 candidate postings)
 
@@ -70,22 +71,26 @@ Run these steps in order, once a week. `job_search_profile.md` decides fit; if i
 
 ## G. Update job_leads.md (output: updated leads file)
 
-24. Add each new High, Medium or Low lead to **Active leads** with: company, role, location, fit, status `New`, a next action, a due date (`DATE + 7 days`) and the posting link.
-25. Add a notes section for each new lead at the top of **Lead notes** with: the date added, the fit reason, contacts (High leads only), and the log entry `DATE: Added by weekly run`.
-26. For each existing lead you touched, add a dated log entry, and update its next action and due date.
-27. Change a lead's status only when the user confirms it (for example, that they sent a message). Never set `Closed` yourself.
-28. The first time you add a real lead, delete the example row and the example notes section.
+24. Add one row to the table for each new High, Medium or Low lead:
+    - **Source:** where you found it (job board name, company careers page, or search).
+    - **Role**, **Company**, **Location**, **Link:** taken from the posting.
+    - **MatchReason:** `<score>: <one-line reason>` from step 16.
+    - **Notes:** `DATE: Added by weekly run`. For High leads, add the contacts as `Contacts: Name (Title, source link)`.
+    - **OutreachStatus:** `Drafted` if you wrote outreach in step 22, otherwise `Not started`.
+25. For each existing lead you touched, add a dated entry at the front of **Notes**, for example `DATE: Follow-up drafted`. Separate entries with `<br>`.
+26. Set **OutreachStatus** to `Drafted` when you save a draft. Set `Sent`, `Replied`, `In conversation` or `Applied` only when the user confirms it. Never set `Closed` yourself.
+27. Keep every row on one line, and replace any `|` inside a cell with `/`, so the table doesn't break.
 
 ## H. Report (output: `weekly_reports/DATE.md` and a summary in chat)
 
-29. Write `weekly_reports/DATE.md` with these sections:
+28. Write `weekly_reports/DATE.md` with these sections:
     1. **Summary:** postings reviewed, leads added (High, Medium and Low counts), Out leads and their top reasons.
     2. **New High-fit leads:** company, role, a one-line reason, and the link.
     3. **Existing leads:** status changes, postings taken down, stale leads.
     4. **Drafts to review:** the file paths of this run's files in `outreach/`.
     5. **Top 3 actions this week:** specific, ordered by priority.
     6. **Questions for you:** missing profile items, unclear postings, decisions needed.
-30. Post the same report in chat.
+29. Post the same report in chat.
 
 ## Done when
 
