@@ -58,11 +58,49 @@ type Job = {
   location: string;
   via: string;
   postedAt: string;
+  postedDays: number | null; // days since posting, for sorting; null if unknown
   remote: boolean;
   link: string;
+  description: string; // first part of the posting text, for screening
   query: string;
   provider: "serpapi" | "searchapi";
 };
+
+// Google Jobs puts the posting age ("9 days ago") in `extensions`, and sometimes
+// in `detected_extensions.posted_at`.
+function postedText(j: any): string {
+  if (j.detected_extensions?.posted_at) return j.detected_extensions.posted_at;
+  return (j.extensions ?? []).find((e: string) => /\bago\b|^just posted|^today/i.test(e)) ?? "";
+}
+
+function postedDays(text: string): number | null {
+  if (!text) return null;
+  if (/just posted|today|hour|minute/i.test(text)) return 0;
+  const m = text.match(/(\d+)\+?\s*(day|week|month)/i);
+  if (!m) return null;
+  const n = Number(m[1]);
+  return m[2].toLowerCase().startsWith("week") ? n * 7 : m[2].toLowerCase().startsWith("month") ? n * 30 : n;
+}
+
+function toJob(j: any, link: string, query: string, provider: Job["provider"]): Job {
+  const posted = postedText(j);
+  const wfh =
+    j.detected_extensions?.work_from_home === true ||
+    (j.extensions ?? []).some((e: string) => /work from home/i.test(e));
+  return {
+    title: j.title ?? "",
+    company: j.company_name ?? "",
+    location: j.location ?? "",
+    via: (j.via ?? "").replace(/^via\s+/i, ""),
+    postedAt: posted,
+    postedDays: postedDays(posted),
+    remote: isRemote(j.location ?? "", j.title ?? "", wfh),
+    link,
+    description: (j.description ?? "").replace(/\s+/g, " ").trim().slice(0, 1500),
+    query,
+    provider,
+  };
+}
 
 function redact(message: string): string {
   let out = message;
@@ -93,17 +131,9 @@ async function searchSerpApi(query: string): Promise<Job[]> {
   if (data.error && !/hasn't returned any results/i.test(data.error)) {
     throw new Error(`SerpAPI: ${data.error}`);
   }
-  return (data.jobs_results ?? []).map((j: any): Job => ({
-    title: j.title ?? "",
-    company: j.company_name ?? "",
-    location: j.location ?? "",
-    via: (j.via ?? "").replace(/^via\s+/i, ""),
-    postedAt: j.detected_extensions?.posted_at ?? "",
-    remote: isRemote(j.location ?? "", j.title ?? "", j.detected_extensions?.work_from_home),
-    link: j.apply_options?.[0]?.link ?? j.share_link ?? "",
-    query,
-    provider: "serpapi",
-  }));
+  return (data.jobs_results ?? []).map((j: any) =>
+    toJob(j, j.apply_options?.[0]?.link ?? j.share_link ?? "", query, "serpapi"),
+  );
 }
 
 async function searchSearchApi(query: string): Promise<Job[]> {
@@ -121,17 +151,9 @@ async function searchSearchApi(query: string): Promise<Job[]> {
   if (!res.ok) throw new Error(`SearchAPI HTTP ${res.status}`);
   const data: any = await res.json();
   if (data.error) throw new Error(`SearchAPI: ${data.error}`);
-  return (data.jobs ?? []).map((j: any): Job => ({
-    title: j.title ?? "",
-    company: j.company_name ?? "",
-    location: j.location ?? "",
-    via: (j.via ?? "").replace(/^via\s+/i, ""),
-    postedAt: j.detected_extensions?.posted_at ?? "",
-    remote: isRemote(j.location ?? "", j.title ?? "", j.detected_extensions?.work_from_home),
-    link: j.apply_link ?? j.apply_links?.[0]?.link ?? j.sharing_link ?? "",
-    query,
-    provider: "searchapi",
-  }));
+  return (data.jobs ?? []).map((j: any) =>
+    toJob(j, j.apply_link ?? j.apply_links?.[0]?.link ?? j.sharing_link ?? "", query, "searchapi"),
+  );
 }
 
 async function search(query: string): Promise<Job[]> {
@@ -202,14 +224,17 @@ async function main() {
   const todayJson = join(RESULTS_DIR, `${date}.json`);
   const earlierToday: Job[] = existsSync(todayJson) ? JSON.parse(readFileSync(todayJson, "utf8")) : [];
   const newJobs = [...found.values()];
-  const jobs = [...earlierToday, ...newJobs];
+  // Newest postings first; unknown dates last.
+  const jobs = [...earlierToday, ...newJobs].sort(
+    (a, b) => (a.postedDays ?? Infinity) - (b.postedDays ?? Infinity),
+  );
   for (const job of newJobs) seen[jobKey(job)] = date;
   writeFileSync(SEEN_FILE, JSON.stringify(seen, null, 2) + "\n");
   writeFileSync(join(RESULTS_DIR, `${date}.json`), JSON.stringify(jobs, null, 2) + "\n");
 
   const rows = jobs.map(
-    (j) =>
-      `| ${cell(j.title)} | ${cell(j.company)} | ${cell(j.location)} | ${cell(j.postedAt) || "unknown"} | ${cell(j.via)} | ${j.link ? `[Link](${j.link})` : "none"} | ${cell(j.query)} |`,
+    (j, i) =>
+      `| ${i + 1} | ${cell(j.title)} | ${cell(j.company)} | ${cell(j.location)} | ${cell(j.postedAt) || "unknown"} | ${cell(j.via)} | ${j.link ? `[Link](${j.link})` : "none"} | ${cell(j.query)} |`,
   );
   const md = [
     `# Scrape results: ${date}`,
@@ -221,18 +246,44 @@ async function main() {
     `- New remote TAM/CSM candidates: ${newJobs.length} this run${earlierToday.length ? `, ${jobs.length} in total today` : ""}`,
     `- Skipped: ${skipped.notRole} not a target role, ${skipped.notRemote} not remote, ${skipped.known} already seen or in job_leads.md`,
     "",
-    "| Role | Company | Location | Posted | Via | Link | Query |",
-    "| --- | --- | --- | --- | --- | --- | --- |",
+    `Sorted newest first. Full posting text for each candidate is in \`${date}.json\`.`,
+    "",
+    "| # | Role | Company | Location | Posted | Via | Link | Query |",
+    "| --- | --- | --- | --- | --- | --- | --- | --- |",
     ...rows,
     "",
   ].join("\n");
   writeFileSync(join(RESULTS_DIR, `${date}.md`), md);
 
   console.log(`Done: ${newJobs.length} new candidates (${jobs.length} today) saved to scrape_results/${date}.md`);
-  if (failed === queries.length) process.exit(1);
+  if (failed === queries.length) {
+    notify("Job scrape FAILED", `All ${failed} searches failed. See logs/scrape.log`);
+    process.exit(1);
+  }
+  notify(
+    failed ? "Job scrape finished with errors" : "Job scrape finished",
+    `${newJobs.length} new candidates in scrape_results/${date}.md` +
+      (failed ? ` (${failed} of ${queries.length} searches failed; see logs/scrape.log)` : ""),
+  );
+}
+
+// Shows a macOS notification. Set SCRAPE_NOTIFY=0 to turn it off.
+function notify(title: string, message: string) {
+  if (process.env.SCRAPE_NOTIFY === "0" || process.platform !== "darwin") return;
+  const esc = (s: string) => s.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
+  try {
+    Bun.spawnSync([
+      "osascript",
+      "-e",
+      `display notification "${esc(message)}" with title "${esc(title)}" sound name "Glass"`,
+    ]);
+  } catch {
+    // A missing notification shouldn't fail the scrape.
+  }
 }
 
 main().catch((err) => {
   console.error(redact(String(err)));
+  notify("Job scrape FAILED", redact(String(err)).slice(0, 120));
   process.exit(1);
 });

@@ -38,7 +38,7 @@ Find leads through `bun run scrape` first. It searches Google Jobs with SerpAPI 
 
 ## D. Screen and score (output: scored leads, each with a one-line reason)
 
-14. Open each candidate posting and check:
+14. Read each candidate's `description` in `scrape_results/DATE.json` first. Open the posting link only when the description doesn't settle the checks below, or for leads that score High. Check:
     - **Role:** the responsibilities are post-sale and customer-facing (account ownership, adoption, renewals, technical escalations). If the role is mainly pre-sales, quota-carrying sales or implementation only, it's **Out**.
     - **Remote:** the posting says fully remote. If it requires regular office days or says hybrid, it's **Out**. If it's unclear, note "remote: unclear".
 15. Score the leads that pass:
