@@ -42,6 +42,7 @@ If one of these files is missing, say so and ask before creating it. Don't inven
 
 - Source facts about companies, roles and people with a link. Mark anything inferred as inferred.
 - **Always ask before every `git commit` and `git push`.** Summarize what will be committed and wait for the user's yes for that commit. A request that mentions pushing ("do X and push") is a plan, not approval.
+- **One commit per logical change.** Before committing, group the changes into logical commits (for example: a script fix, a docs update, a weekly run's results), and show the user the proposed commits, with the files in each and a subject line. If one file holds two unrelated changes, split them with partial staging. The user is practicing this, so briefly explain how you grouped the changes.
 - Never send outreach or applications, or submit forms, on the user's behalf. Draft them for review.
 - **Keep people's contact info out of git.** The repo is public. Names, titles, profile links and anything else about specific people go in `private/contacts.md` (git-ignored), never in `job_leads.md`, `outreach/` or `weekly_reports/`. Put the resume and other personal files in `private/` too.
 - Start resume bullets with strong action verbs.
