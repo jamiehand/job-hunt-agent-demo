@@ -11,7 +11,7 @@ The folder is a public git repository (`jamiehand/job-hunt-agent-demo` on GitHub
 ## Weekly job search (find-jobs)
 
 - `bun run find-jobs` (in `scripts/find-jobs.ts`) runs the workflow's searches through Google Jobs, using SearchAPI and falling back to SerpAPI. It writes new remote TAM and CSM candidates to `find_jobs_results/YYYY-MM-DD.md` and `.json`, and records them in `find_jobs_results/seen.json` so they don't come up again. For a cheaper test run, set `FIND_JOBS_MAX_QUERIES=1`.
-- The results table is numbered and sorted newest first. The `.json` file also has the first 1,500 characters of each posting, so screening can start there instead of opening every link.
+- The results table is numbered and sorted newest first. The `.json` file also has each posting's full text (`description`) and Google's structured sections such as Qualifications and Responsibilities (`highlights`), so screening can check requirements there instead of opening every link. The 44 candidates from the 2026-11-05 runs have only the first 1,500 characters and no `highlights`.
 - When it finishes, it shows a macOS notification with the number of new candidates, or a "FAILED" notification if searches failed. Set `FIND_JOBS_NOTIFY=0` to turn this off.
 - It runs every Monday at 8 am through launchd: `~/Library/LaunchAgents/com.jamiehand.job-hunt-find-jobs.plist`. Output goes to `logs/find-jobs.log`. To run it now: `launchctl kickstart gui/$(id -u)/com.jamiehand.job-hunt-find-jobs`.
 - The results are unscored. The weekly run screens and scores them before anything goes into `job_leads.md`.

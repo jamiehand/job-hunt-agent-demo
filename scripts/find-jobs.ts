@@ -61,7 +61,9 @@ type Job = {
   postedDays: number | null; // days since posting, for sorting; null if unknown
   remote: boolean;
   link: string;
-  description: string; // first part of the posting text, for screening
+  description: string; // full posting text as Google Jobs gives it (capped at 20,000 characters), for screening
+  // Google's structured sections, such as Qualifications and Responsibilities, when available.
+  highlights: { title: string; items: string[] }[];
   query: string;
   provider: "serpapi" | "searchapi";
 };
@@ -96,7 +98,12 @@ function toJob(j: any, link: string, query: string, provider: Job["provider"]): 
     postedDays: postedDays(posted),
     remote: isRemote(j.location ?? "", j.title ?? "", wfh),
     link,
-    description: (j.description ?? "").replace(/\s+/g, " ").trim().slice(0, 1500),
+    // Keep line breaks so requirement lists stay readable; collapse other whitespace.
+    description: (j.description ?? "").replace(/[ \t]+/g, " ").replace(/\n{3,}/g, "\n\n").trim().slice(0, 20000),
+    highlights: (j.job_highlights ?? []).map((h: any) => ({
+      title: h.title ?? "",
+      items: (h.items ?? []).map((i: string) => String(i).trim()),
+    })),
     query,
     provider,
   };

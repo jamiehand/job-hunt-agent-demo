@@ -39,7 +39,7 @@ Find leads through `bun run find-jobs` first. It searches Google Jobs with Searc
 
 ## D. Screen and score (output: scored leads, each with a one-line reason)
 
-14. Read each candidate's `description` in `find_jobs_results/DATE.json` first. Open the posting link only when the description doesn't settle the checks below, or for leads that score High. Check:
+14. Read each candidate's `description` and `highlights` (Qualifications, Responsibilities) in `find_jobs_results/DATE.json` first. Open the posting link only when the description doesn't settle the checks below, or for leads that score High. Check:
     - **Role:** the responsibilities are post-sale and customer-facing (account ownership, adoption, renewals, technical escalations). If the role is mainly pre-sales, quota-carrying sales or implementation only, it's **Out**.
     - **Remote:** the posting says fully remote. If it requires regular office days or says hybrid, it's **Out**. If it's unclear, note "remote: unclear".
     - **Travel and driving:** note how much travel the posting states, or "not stated". Travel doesn't change the score. If the role requires driving, it scores **Medium at most** (see the profile).
