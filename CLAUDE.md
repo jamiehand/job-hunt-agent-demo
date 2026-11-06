@@ -10,13 +10,13 @@ The folder is a public git repository (`jamiehand/job-hunt-agent-demo` on GitHub
 
 ## Weekly scrape
 
-- `bun run scrape` (in `scripts/scrape.ts`) runs the workflow's searches through Google Jobs, using SerpAPI and falling back to SearchAPI. It writes new remote TAM and CSM candidates to `scrape_results/YYYY-MM-DD.md` and `.json`, and records them in `scrape_results/seen.json` so they don't come up again. For a cheaper test run, set `SCRAPE_MAX_QUERIES=1`.
+- `bun run scrape` (in `scripts/scrape.ts`) runs the workflow's searches through Google Jobs, using SearchAPI and falling back to SerpAPI. It writes new remote TAM and CSM candidates to `scrape_results/YYYY-MM-DD.md` and `.json`, and records them in `scrape_results/seen.json` so they don't come up again. For a cheaper test run, set `SCRAPE_MAX_QUERIES=1`.
 - The results table is numbered and sorted newest first. The `.json` file also has the first 1,500 characters of each posting, so screening can start there instead of opening every link.
 - When it finishes, it shows a macOS notification with the number of new candidates, or a "FAILED" notification if searches failed. Set `SCRAPE_NOTIFY=0` to turn this off.
 - It runs every Monday at 8 am through launchd: `~/Library/LaunchAgents/com.jamiehand.job-hunt-scrape.plist`. Output goes to `logs/scrape.log`. To run it now: `launchctl kickstart gui/$(id -u)/com.jamiehand.job-hunt-scrape`.
 - The results are unscored. The weekly run screens and scores them before anything goes into `job_leads.md`.
 - **Tell the user when anything is broken**: the scrape, the schedule, an API key or quota, missing or stale results, or anything else in this setup. Say it near the top of your reply, not only in the report. Include what broke, how you know (for example, a line from `logs/scrape.log`) and what you did instead, and suggest ways to fix it, so you can work it out together. Using a backup doesn't make a problem OK to skip over.
-- **Find job leads through this scrape first** (SerpAPI, with SearchAPI as the fallback). Use Claude's built-in web search only as a backup if the scrape fails, and say so in the report.
+- **Find job leads through this scrape first** (SearchAPI, with SerpAPI as the fallback). Use Claude's built-in web search only as a backup if the scrape fails, and say so in the report.
 - Keep the API keys for lead discovery only. Each full run uses about 11 searches, and the plans allow about 100 a month. Read posting pages and research companies and contacts with Claude's own tools, not the APIs.
 - `scrape_results/` and `logs/` are git-ignored.
 
