@@ -42,7 +42,7 @@ Hybrid, on-site, and "remote" roles that require regular office days are ruled o
 | Constraint | Value | Type |
 | --- | --- | --- |
 | Start date | Not set | — |
-| Travel | Not set | — |
+| Travel | Up to about 10%, by air and rideshare; no driving. Excited about conferences, offsites and team gatherings | Strong preference |
 | Work authorization | Not set | — |
 
 ## Fit scoring
@@ -51,6 +51,7 @@ Hybrid, on-site, and "remote" roles that require regular office days are ruled o
 - **Medium:** a target role and fully remote, but in an adjacent industry.
 - **Low:** meets the must-haves but is a weak match on role scope or industry.
 - **Out:** breaks a must-have (for example, not fully remote).
+- **Travel adjustment:** a role that states travel above 10%, or asks for a driver's license, "reliable transportation" or living within driving distance of clients, scores **Medium at most**, with the travel noted in the lead. Travel for conferences, offsites and team gatherings is a plus.
 
 ## Open items
 
