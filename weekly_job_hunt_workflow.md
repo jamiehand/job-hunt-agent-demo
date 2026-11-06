@@ -73,7 +73,8 @@ Find leads through `bun run scrape` first. It searches Google Jobs with SerpAPI 
     - **Source:** where you found it (job board name, company careers page, or search).
     - **Role**, **Company**, **Location**, **Link:** taken from the posting.
     - **MatchReason:** `<score>: <one-line reason>` from step 16.
-    - **Notes:** `DATE: Added by weekly run`. For High leads, add the contacts as `Contacts: Name (Title, source link)`.
+    - **Notes:** `DATE: Added by weekly run`. For High leads with contacts, add `Contacts: see private/contacts.md`.
+    - Write the contacts themselves (name, title, source link) in `private/contacts.md`, under a `## Company: Role` heading. Never put a person's name in `job_leads.md`, `outreach/` or `weekly_reports/`: those files are committed to a public repo. Outreach drafts use `[name]` and a job title.
     - **OutreachStatus:** `Drafted` if you wrote outreach in step 22, otherwise `Not started`.
 25. For each existing lead you touched, add a dated entry at the front of **Notes**, for example `DATE: Follow-up drafted`. Separate entries with `<br>`.
 26. Set **OutreachStatus** to `Drafted` when you save a draft. Set `Sent`, `Replied`, `In conversation` or `Applied` only when the user confirms it. Never set `Closed` yourself.

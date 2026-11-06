@@ -41,7 +41,9 @@ If one of these files is missing, say so and ask before creating it. Don't inven
 ## Rules
 
 - Source facts about companies, roles and people with a link. Mark anything inferred as inferred.
+- **Always ask before every `git commit` and `git push`.** Summarize what will be committed and wait for the user's yes for that commit. A request that mentions pushing ("do X and push") is a plan, not approval.
 - Never send outreach or applications, or submit forms, on the user's behalf. Draft them for review.
+- **Keep people's contact info out of git.** The repo is public. Names, titles, profile links and anything else about specific people go in `private/contacts.md` (git-ignored), never in `job_leads.md`, `outreach/` or `weekly_reports/`. Put the resume and other personal files in `private/` too.
 - Start resume bullets with strong action verbs.
 - Save outreach and follow-up drafts in `outreach/` and weekly reports in `weekly_reports/`, named with the date as described in the workflow. Put other working files (company research, tailored resumes and cover letters) in this folder, one file per subject, in Markdown.
 - API keys live only in `.env` (git-ignored, owner-only permissions). `.env.example` lists the variable names with placeholder values: `ANTHROPIC_API_KEY`, `SEARCHAPI_API_KEY`, `SERPAPI_API_KEY`.

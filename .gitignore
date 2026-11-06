@@ -27,3 +27,6 @@ build/
 # Scrape output and logs (regenerated weekly)
 scrape_results/
 logs/
+
+# Personal files: resume, contacts, notes about people. Never commit.
+private/
