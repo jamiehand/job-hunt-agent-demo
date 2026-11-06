@@ -24,19 +24,17 @@ Run these steps in order, once a week. `job_search_profile.md` decides fit; if i
 6. Open the **Link** for each of these leads. If the posting has been taken down, add the note `DATE: Posting taken down` and flag it in the report. Don't close the lead.
 7. Flag every lead whose newest **Notes** entry is more than 21 days old as **stale**.
 
-## C. Find new leads (output: up to 30 candidate postings)
+## C. Find new leads (output: candidate postings from the scrape)
 
-8. Run these web searches, 8 in total (each target role with each target industry):
-   - `"technical account manager" remote <industry>`
-   - `"customer success manager" remote <industry>`
-9. Run these searches without an industry:
-   - `"technical customer success manager" remote`
-   - `"customer success engineer" remote`
-   - `"strategic customer success manager" remote`
-10. If the profile lists target companies, open each one's careers page and look for TAM or CSM roles.
-11. Keep postings dated within the last 14 days. Drop postings that are undated and look closed.
+Find leads through `bun run scrape` first. It searches Google Jobs with SerpAPI and falls back to SearchAPI. Use Claude's built-in web search only as a backup (step 10).
+
+8. Open the newest `scrape_results/YYYY-MM-DD.md` (written every Monday at 8 am). If it's from the last 7 days, use its candidates. If it's missing or older, run `bun run scrape` and use the file it writes.
+9. The scrape runs these queries: each target role with each target industry (8 queries), 3 role variants without an industry, and 2 queries for each target company listed in the profile. To change the searches, edit `QUERIES` in `scripts/scrape.ts` rather than searching by hand.
+10. **Backup:** if the scrape fails (both providers fail, or the log shows errors), run the same queries as Claude web searches instead. In the report, say that this week's leads came from the backup, and include the error from `logs/scrape.log`.
+    - Don't re-run the scrape more than once a week just to retry it, since each full run uses about 11 API searches.
+11. Keep postings dated within the last 14 days. Keep undated postings, but mark their date as unknown.
 12. Drop any company and role pair that's already in `job_leads.md`.
-13. Stop collecting after 30 candidates. Note in the report if you stopped early.
+13. Screen every remaining candidate. If there are more than 40, screen the 40 most recently posted, and note in the report how many you skipped.
 
 ## D. Screen and score (output: scored leads, each with a one-line reason)
 

@@ -1,0 +1,8 @@
+{
+  "name": "job-hunt-agent-demo",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "scrape": "bun scripts/scrape.ts"
+  }
+}

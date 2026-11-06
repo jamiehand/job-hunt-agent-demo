@@ -23,3 +23,7 @@ __pycache__/
 venv/
 dist/
 build/
+
+# Scrape output and logs (regenerated weekly)
+scrape_results/
+logs/
