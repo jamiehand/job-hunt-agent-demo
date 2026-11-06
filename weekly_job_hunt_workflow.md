@@ -43,6 +43,7 @@ Find leads through `bun run find-jobs` first. It searches Google Jobs with Searc
     - **Role:** the responsibilities are post-sale and customer-facing (account ownership, adoption, renewals, technical escalations). If the role is mainly pre-sales, quota-carrying sales or implementation only, it's **Out**.
     - **Remote:** the posting says fully remote. If it requires regular office days or says hybrid, it's **Out**. If it's unclear, note "remote: unclear".
     - **Travel and driving:** note how much travel the posting states, or "not stated". Travel doesn't change the score. If the role requires driving, it scores **Medium at most** (see the profile).
+    - **Coding level** (CSE and other technical roles): from the requirements, note `Coding: config & troubleshooting`, `Coding: APIs & scripting` or `Coding: production code` (**Medium at most**), as the profile describes. Add any languages or tools the posting lists in parentheses, for example `Coding: APIs & scripting (Python, SQL)`.
 15. Score the leads that pass:
     - **High:** a target role, fully remote, and a target industry.
     - **Medium:** a target role and fully remote, but an adjacent industry, or remote is unclear.

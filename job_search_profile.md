@@ -11,6 +11,11 @@ _Last updated: 2026-11-05_
 | Primary | Technical account manager (TAM) | Post-sale, technical, customer-facing |
 | Primary | Customer success manager (CSM) | Adoption, retention, expansion |
 
+- **Customer success engineer (CSE) roles** count as target roles, depending on how much coding they need:
+  - **Config and troubleshooting** (configuring the product, troubleshooting, explaining APIs, reading logs, editing a simple script): a good fit. Score as usual. Note `Coding: config & troubleshooting`.
+  - **APIs and scripting** (writing scripts to connect systems, working with APIs and JSON, some SQL): a role you can grow into. Score as usual. Note `Coding: APIs & scripting`.
+  - **Production code** (fixing the product's bugs, shipping code changes): **Medium at most**. Note `Coding: production code`.
+  - When the posting lists specific languages or tools, add them in parentheses, for example `Coding: APIs & scripting (Python, SQL)`, so you can see what to study for each role.
 - **Seniority:** not set yet. Claude includes all levels until you set one.
 - **Out of scope:** pre-sales roles (solutions engineer, sales engineer) and implementation-only roles, unless you add them above.
 
