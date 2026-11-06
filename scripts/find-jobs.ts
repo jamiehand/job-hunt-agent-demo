@@ -1,18 +1,18 @@
 // Weekly job search (bun run find-jobs): runs the workflow's searches through Google Jobs and saves
-// new remote TAM / CSM postings to scrape_results/DATE.md (and .json).
+// new remote TAM / CSM postings to find_jobs_results/DATE.md (and .json).
 //
 // Run with: bun run find-jobs
 // Bun loads .env automatically. Keys used: SEARCHAPI_API_KEY (primary),
 // SERPAPI_API_KEY (fallback). Keys are never printed or written to disk.
 //
 // Optional env vars:
-//   SCRAPE_MAX_QUERIES=2   run only the first N queries (for testing)
+//   FIND_JOBS_MAX_QUERIES=2   run only the first N queries (for testing)
 
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
 const ROOT = join(import.meta.dir, "..");
-const RESULTS_DIR = join(ROOT, "scrape_results");
+const RESULTS_DIR = join(ROOT, "find_jobs_results");
 const SEEN_FILE = join(RESULTS_DIR, "seen.json");
 const LEADS_FILE = join(ROOT, "job_leads.md");
 
@@ -187,7 +187,7 @@ function cell(s: string): string {
 
 async function main() {
   const date = new Date().toLocaleDateString("en-CA"); // local YYYY-MM-DD
-  const max = Number(process.env.SCRAPE_MAX_QUERIES) || QUERIES.length;
+  const max = Number(process.env.FIND_JOBS_MAX_QUERIES) || QUERIES.length;
   const queries = QUERIES.slice(0, max);
 
   mkdirSync(RESULTS_DIR, { recursive: true });
@@ -238,7 +238,7 @@ async function main() {
       `| ${i + 1} | ${cell(j.title)} | ${cell(j.company)} | ${cell(j.location)} | ${cell(j.postedAt) || "unknown"} | ${cell(j.via)} | ${j.link ? `[Link](${j.link})` : "none"} | ${cell(j.query)} |`,
   );
   const md = [
-    `# Scrape results: ${date}`,
+    `# Find-jobs results: ${date}`,
     "",
     `Unscored candidates from Google Jobs. The weekly run screens and scores these (workflow step D) before anything goes into \`job_leads.md\`.`,
     "",
@@ -256,21 +256,21 @@ async function main() {
   ].join("\n");
   writeFileSync(join(RESULTS_DIR, `${date}.md`), md);
 
-  console.log(`Done: ${newJobs.length} new candidates (${jobs.length} today) saved to scrape_results/${date}.md`);
+  console.log(`Done: ${newJobs.length} new candidates (${jobs.length} today) saved to find_jobs_results/${date}.md`);
   if (failed === queries.length) {
-    notify("Job scrape FAILED", `All ${failed} searches failed. See logs/scrape.log`);
+    notify("Find jobs FAILED", `All ${failed} searches failed. See logs/find-jobs.log`);
     process.exit(1);
   }
   notify(
-    failed ? "Job scrape finished with errors" : "Job scrape finished",
-    `${newJobs.length} new candidates in scrape_results/${date}.md` +
-      (failed ? ` (${failed} of ${queries.length} searches failed; see logs/scrape.log)` : ""),
+    failed ? "Find jobs finished with errors" : "Find jobs finished",
+    `${newJobs.length} new candidates in find_jobs_results/${date}.md` +
+      (failed ? ` (${failed} of ${queries.length} searches failed; see logs/find-jobs.log)` : ""),
   );
 }
 
-// Shows a macOS notification. Set SCRAPE_NOTIFY=0 to turn it off.
+// Shows a macOS notification. Set FIND_JOBS_NOTIFY=0 to turn it off.
 function notify(title: string, message: string) {
-  if (process.env.SCRAPE_NOTIFY === "0" || process.platform !== "darwin") return;
+  if (process.env.FIND_JOBS_NOTIFY === "0" || process.platform !== "darwin") return;
   const esc = (s: string) => s.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
   try {
     Bun.spawnSync([
@@ -279,12 +279,12 @@ function notify(title: string, message: string) {
       `display notification "${esc(message)}" with title "${esc(title)}" sound name "Glass"`,
     ]);
   } catch {
-    // A missing notification shouldn't fail the scrape.
+    // A missing notification shouldn't fail the job search.
   }
 }
 
 main().catch((err) => {
   console.error(redact(String(err)));
-  notify("Job scrape FAILED", redact(String(err)).slice(0, 120));
+  notify("Find jobs FAILED", redact(String(err)).slice(0, 120));
   process.exit(1);
 });

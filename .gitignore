@@ -24,8 +24,8 @@ venv/
 dist/
 build/
 
-# Scrape output and logs (regenerated weekly)
-scrape_results/
+# find-jobs output and logs (regenerated weekly)
+find_jobs_results/
 logs/
 
 # Personal files: resume, contacts, notes about people. Never commit.

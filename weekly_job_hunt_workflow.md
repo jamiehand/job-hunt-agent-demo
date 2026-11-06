@@ -25,21 +25,21 @@ Run these steps in order, once a week. `job_search_profile.md` decides fit; if i
 6. Open the **Link** for each of these leads. If the posting has been taken down, add the note `DATE: Posting taken down` and flag it in the report. Don't close the lead.
 7. Flag every lead whose newest **Notes** entry is more than 21 days old as **stale**.
 
-## C. Find new leads (output: candidate postings from the scrape)
+## C. Find new leads (output: candidate postings from find-jobs)
 
 Find leads through `bun run find-jobs` first. It searches Google Jobs with SearchAPI and falls back to SerpAPI. Use Claude's built-in web search only as a backup (step 10).
 
-8. Open the newest `scrape_results/YYYY-MM-DD.md` (written every Monday at 8 am). If it's from the last 7 days, use its candidates. If it's missing or older, run `bun run find-jobs` and use the file it writes.
-9. The scrape runs these queries: each target role with each target industry (8 queries), 3 role variants without an industry, and 2 queries for each target company listed in the profile. To change the searches, edit `QUERIES` in `scripts/find-jobs.ts` rather than searching by hand.
-10. **Backup:** if the scrape fails (both providers fail, or the log shows errors), run the same queries as Claude web searches instead. In the report, say that this week's leads came from the backup, and include the error from `logs/scrape.log`.
-    - Don't re-run the scrape more than once a week just to retry it, since each full run uses about 11 API searches.
+8. Open the newest `find_jobs_results/YYYY-MM-DD.md` (written every Monday at 8 am). If it's from the last 7 days, use its candidates. If it's missing or older, run `bun run find-jobs` and use the file it writes.
+9. find-jobs runs these queries: each target role with each target industry (8 queries), 3 role variants without an industry, and 2 queries for each target company listed in the profile. To change the searches, edit `QUERIES` in `scripts/find-jobs.ts` rather than searching by hand.
+10. **Backup:** if find-jobs fails (both providers fail, or the log shows errors), run the same queries as Claude web searches instead. In the report, say that this week's leads came from the backup, and include the error from `logs/find-jobs.log`.
+    - Don't re-run find-jobs more than once a week just to retry it, since each full run uses about 11 API searches.
 11. Keep postings dated within the last 14 days. Keep undated postings, but mark their date as unknown.
 12. Drop any company and role pair that's already in `job_leads.md`.
 13. Screen every remaining candidate. If there are more than 40, screen the 40 most recently posted, and note in the report how many you skipped.
 
 ## D. Screen and score (output: scored leads, each with a one-line reason)
 
-14. Read each candidate's `description` in `scrape_results/DATE.json` first. Open the posting link only when the description doesn't settle the checks below, or for leads that score High. Check:
+14. Read each candidate's `description` in `find_jobs_results/DATE.json` first. Open the posting link only when the description doesn't settle the checks below, or for leads that score High. Check:
     - **Role:** the responsibilities are post-sale and customer-facing (account ownership, adoption, renewals, technical escalations). If the role is mainly pre-sales, quota-carrying sales or implementation only, it's **Out**.
     - **Remote:** the posting says fully remote. If it requires regular office days or says hybrid, it's **Out**. If it's unclear, note "remote: unclear".
     - **Travel and driving:** note how much travel the posting states, or "not stated". Travel doesn't change the score. If the role requires driving, it scores **Medium at most** (see the profile).
