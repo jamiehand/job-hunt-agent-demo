@@ -42,6 +42,7 @@ Find leads through `bun run find-jobs` first. It searches Google Jobs with Searc
 14. Read each candidate's `description` in `scrape_results/DATE.json` first. Open the posting link only when the description doesn't settle the checks below, or for leads that score High. Check:
     - **Role:** the responsibilities are post-sale and customer-facing (account ownership, adoption, renewals, technical escalations). If the role is mainly pre-sales, quota-carrying sales or implementation only, it's **Out**.
     - **Remote:** the posting says fully remote. If it requires regular office days or says hybrid, it's **Out**. If it's unclear, note "remote: unclear".
+    - **Travel and driving:** note how much travel the posting states, or "not stated". Travel doesn't change the score. If the role requires driving, it scores **Medium at most** (see the profile).
 15. Score the leads that pass:
     - **High:** a target role, fully remote, and a target industry.
     - **Medium:** a target role and fully remote, but an adjacent industry, or remote is unclear.
@@ -74,7 +75,7 @@ Find leads through `bun run find-jobs` first. It searches Google Jobs with Searc
     - **Source:** where you found it (job board name, company careers page, or search).
     - **Role**, **Company**, **Location**, **Link:** taken from the posting.
     - **MatchReason:** `<score>: <one-line reason>` from step 16.
-    - **Notes:** `DATE: Added by weekly run`. For High leads with contacts, add `Contacts: see private/contacts.md`.
+    - **Notes:** `DATE: Added by weekly run`, then `Travel: <amount or not stated>`. For High leads with contacts, add `Contacts: see private/contacts.md`.
     - Write the contacts themselves (name, title, source link) in `private/contacts.md`, under a `## Company: Role` heading. Never put a person's name in `job_leads.md`, `outreach/` or `weekly_reports/`: those files are committed to a public repo. Outreach drafts use `[name]` and a job title.
     - **OutreachStatus:** `Drafted` if you wrote outreach in step 22, otherwise `Not started`.
 25. For each existing lead you touched, add a dated entry at the front of **Notes**, for example `DATE: Follow-up drafted`. Separate entries with `<br>`.
