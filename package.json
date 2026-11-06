@@ -3,6 +3,6 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "scrape": "bun scripts/scrape.ts"
+    "find-jobs": "bun scripts/find-jobs.ts"
   }
 }

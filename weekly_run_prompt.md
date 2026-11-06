@@ -7,7 +7,7 @@ Run my weekly job hunt.
 
 1. Confirm my profile. Read job_search_profile.md and show me a short summary: target roles, location, industries, constraints and open items. Ask me whether anything has changed, and wait for my answer. If I give you changes, update job_search_profile.md before going on.
 
-2. Run my workflow. Follow weekly_job_hunt_workflow.md from start to finish, using the profile as confirmed in step 1. Find new leads from the SearchAPI/SerpAPI scrape (the newest scrape_results file, or run `bun run scrape`). Use your own web search only if the scrape fails.
+2. Run my workflow. Follow weekly_job_hunt_workflow.md from start to finish, using the profile as confirmed in step 1. Find new leads from the SearchAPI/SerpAPI scrape (the newest scrape_results file, or run `bun run find-jobs`). Use your own web search only if the scrape fails.
 
 3. Add new leads. Add each new lead that fits to job_leads.md, using the existing columns. Don't add duplicates, and don't delete anything.
 

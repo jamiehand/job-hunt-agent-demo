@@ -1,7 +1,7 @@
-// Weekly job scrape: runs the workflow's searches through Google Jobs and saves
+// Weekly job search (bun run find-jobs): runs the workflow's searches through Google Jobs and saves
 // new remote TAM / CSM postings to scrape_results/DATE.md (and .json).
 //
-// Run with: bun run scrape
+// Run with: bun run find-jobs
 // Bun loads .env automatically. Keys used: SEARCHAPI_API_KEY (primary),
 // SERPAPI_API_KEY (fallback). Keys are never printed or written to disk.
 //

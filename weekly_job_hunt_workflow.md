@@ -27,10 +27,10 @@ Run these steps in order, once a week. `job_search_profile.md` decides fit; if i
 
 ## C. Find new leads (output: candidate postings from the scrape)
 
-Find leads through `bun run scrape` first. It searches Google Jobs with SearchAPI and falls back to SerpAPI. Use Claude's built-in web search only as a backup (step 10).
+Find leads through `bun run find-jobs` first. It searches Google Jobs with SearchAPI and falls back to SerpAPI. Use Claude's built-in web search only as a backup (step 10).
 
-8. Open the newest `scrape_results/YYYY-MM-DD.md` (written every Monday at 8 am). If it's from the last 7 days, use its candidates. If it's missing or older, run `bun run scrape` and use the file it writes.
-9. The scrape runs these queries: each target role with each target industry (8 queries), 3 role variants without an industry, and 2 queries for each target company listed in the profile. To change the searches, edit `QUERIES` in `scripts/scrape.ts` rather than searching by hand.
+8. Open the newest `scrape_results/YYYY-MM-DD.md` (written every Monday at 8 am). If it's from the last 7 days, use its candidates. If it's missing or older, run `bun run find-jobs` and use the file it writes.
+9. The scrape runs these queries: each target role with each target industry (8 queries), 3 role variants without an industry, and 2 queries for each target company listed in the profile. To change the searches, edit `QUERIES` in `scripts/find-jobs.ts` rather than searching by hand.
 10. **Backup:** if the scrape fails (both providers fail, or the log shows errors), run the same queries as Claude web searches instead. In the report, say that this week's leads came from the backup, and include the error from `logs/scrape.log`.
     - Don't re-run the scrape more than once a week just to retry it, since each full run uses about 11 API searches.
 11. Keep postings dated within the last 14 days. Keep undated postings, but mark their date as unknown.

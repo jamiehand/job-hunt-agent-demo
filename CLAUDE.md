@@ -10,7 +10,7 @@ The folder is a public git repository (`jamiehand/job-hunt-agent-demo` on GitHub
 
 ## Weekly scrape
 
-- `bun run scrape` (in `scripts/scrape.ts`) runs the workflow's searches through Google Jobs, using SearchAPI and falling back to SerpAPI. It writes new remote TAM and CSM candidates to `scrape_results/YYYY-MM-DD.md` and `.json`, and records them in `scrape_results/seen.json` so they don't come up again. For a cheaper test run, set `SCRAPE_MAX_QUERIES=1`.
+- `bun run find-jobs` (in `scripts/find-jobs.ts`) runs the workflow's searches through Google Jobs, using SearchAPI and falling back to SerpAPI. It writes new remote TAM and CSM candidates to `scrape_results/YYYY-MM-DD.md` and `.json`, and records them in `scrape_results/seen.json` so they don't come up again. For a cheaper test run, set `SCRAPE_MAX_QUERIES=1`.
 - The results table is numbered and sorted newest first. The `.json` file also has the first 1,500 characters of each posting, so screening can start there instead of opening every link.
 - When it finishes, it shows a macOS notification with the number of new candidates, or a "FAILED" notification if searches failed. Set `SCRAPE_NOTIFY=0` to turn this off.
 - It runs every Monday at 8 am through launchd: `~/Library/LaunchAgents/com.jamiehand.job-hunt-scrape.plist`. Output goes to `logs/scrape.log`. To run it now: `launchctl kickstart gui/$(id -u)/com.jamiehand.job-hunt-scrape`.
