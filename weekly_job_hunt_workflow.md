@@ -27,7 +27,7 @@ Run these steps in order, once a week. `job_search_profile.md` decides fit; if i
 
 ## C. Find new leads (output: candidate postings from find-jobs)
 
-Find leads through `bun run find-jobs` first. It searches Google Jobs with SearchAPI and falls back to SerpAPI. Use Claude's built-in web search only as a backup (step 10).
+Find leads through `bun run find-jobs` first. It searches Google Jobs with SerpAPI and falls back to SearchAPI. Use Claude's built-in web search only as a backup (step 10).
 
 8. Open the newest `find_jobs_results/YYYY-MM-DD.md` (written every Monday at 8 am). If it's from the last 7 days, use its candidates. If it's missing or older, run `bun run find-jobs` and use the file it writes.
 9. find-jobs runs these queries: each target role with each target industry (8 queries), 3 role variants without an industry, and 2 queries for each target company listed in the profile. To change the searches, edit `QUERIES` in `scripts/find-jobs.ts` rather than searching by hand.

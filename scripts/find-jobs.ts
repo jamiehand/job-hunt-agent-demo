@@ -2,8 +2,8 @@
 // new remote TAM / CSM postings to find_jobs_results/DATE.md (and .json).
 //
 // Run with: bun run find-jobs
-// Bun loads .env automatically. Keys used: SEARCHAPI_API_KEY (primary),
-// SERPAPI_API_KEY (fallback). Keys are never printed or written to disk.
+// Bun loads .env automatically. Keys used: SERPAPI_API_KEY (primary),
+// SEARCHAPI_API_KEY (fallback). Keys are never printed or written to disk.
 //
 // Optional env vars:
 //   FIND_JOBS_MAX_QUERIES=2   run only the first N queries (for testing)
@@ -163,13 +163,14 @@ async function searchSearchApi(query: string): Promise<Job[]> {
   );
 }
 
-// SearchAPI is the primary provider; SerpAPI is the backup for any search that fails.
+// SerpAPI is the primary provider (250 free searches a month); SearchAPI is the backup
+// for any search that fails (100 one-time free credits, so save them).
 async function search(query: string): Promise<Job[]> {
   try {
-    return await searchSearchApi(query);
-  } catch (err) {
-    console.warn(`  SearchAPI failed (${redact(String(err))}); trying SerpAPI`);
     return await searchSerpApi(query);
+  } catch (err) {
+    console.warn(`  SerpAPI failed (${redact(String(err))}); trying SearchAPI`);
+    return await searchSearchApi(query);
   }
 }
 
