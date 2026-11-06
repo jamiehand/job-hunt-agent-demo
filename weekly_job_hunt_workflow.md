@@ -11,7 +11,8 @@ Run these steps in order, once a week. `job_search_profile.md` decides fit; if i
    - Roles: technical account manager (TAM) and customer success manager (CSM).
    - Must-haves: one of those roles, and fully remote.
    - Industries: sustainability / climate tech, cybersecurity, ethical / responsible AI, healthtech.
-   - Unset items: if seniority is unset, include all levels. If the country is unset, assume US and mark it _(inferred)_.
+   - Location: US remote, working Pacific time hours. Roles that require another region's hours score Medium at most.
+   - Unset items: if seniority is unset, include all levels.
 3. Read `job_leads.md`. Make a list of the company and role pairs already there, to check for duplicates.
 4. Follow the "This week's focus" line in the prompt the user pasted, if it says anything other than "none". If the prompt changes a step in this workflow, the prompt wins for that run.
 

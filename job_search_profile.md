@@ -17,7 +17,10 @@ _Last updated: 2026-11-05_
 ## Location and work setup
 
 - **Must-have:** fully remote.
-- **Country or time zone:** not set yet. Claude assumes US-based remote roles and marks this as inferred.
+- **Country and time zone:** US, working Pacific time (PT) hours.
+  - Roles that say US remote, or that name Pacific or West Coast hours, are fine.
+  - Roles that require another region's working hours (for example, "East Coast preferred" or "Mountain or Central hours") score **Medium at most**. Note the hours requirement in the lead.
+  - Roles open only outside the US are **Out**.
 - **Relocation:** no.
 
 Hybrid, on-site, and "remote" roles that require regular office days are ruled out.
@@ -52,5 +55,4 @@ Hybrid, on-site, and "remote" roles that require regular office days are ruled o
 ## Open items
 
 - Seniority level
-- Country or time zone for remote work
 - Any target companies or industries to avoid
