@@ -240,9 +240,13 @@ async function main() {
   writeFileSync(SEEN_FILE, JSON.stringify(seen, null, 2) + "\n");
   writeFileSync(join(RESULTS_DIR, `${date}.json`), JSON.stringify(jobs, null, 2) + "\n");
 
+  // Flags postings that mention driving, so screening can check whether it's required.
+  const DRIVING = /driver'?s licen[cs]e|reliable (personal )?transportation|driving distance|valid license|own vehicle/i;
+  const mentionsDriving = (j: Job) =>
+    DRIVING.test(`${j.description} ${(j.highlights ?? []).flatMap((h) => h.items).join(" ")}`);
   const rows = jobs.map(
     (j, i) =>
-      `| ${i + 1} | ${cell(j.title)} | ${cell(j.company)} | ${cell(j.location)} | ${cell(j.postedAt) || "unknown"} | ${cell(j.via)} | ${j.link ? `[Link](${j.link})` : "none"} | ${cell(j.query)} |`,
+      `| ${i + 1} | ${mentionsDriving(j) ? "🚗 " : ""}${cell(j.title)} | ${cell(j.company)} | ${cell(j.location)} | ${cell(j.postedAt) || "unknown"} | ${cell(j.via)} | ${j.link ? `[Link](${j.link})` : "none"} | ${cell(j.query)} |`,
   );
   const md = [
     `# Find-jobs results: ${date}`,
@@ -254,7 +258,7 @@ async function main() {
     `- New remote TAM/CSM candidates: ${newJobs.length} this run${earlierToday.length ? `, ${jobs.length} in total today` : ""}`,
     `- Skipped: ${skipped.notRole} not a target role, ${skipped.notRemote} not remote, ${skipped.known} already seen or in job_leads.md`,
     "",
-    `Sorted newest first. Full posting text for each candidate is in \`${date}.json\`.`,
+    `Sorted newest first. Full posting text for each candidate is in \`${date}.json\`. 🚗 = the posting mentions driving (a license, reliable transportation or driving distance).`,
     "",
     "| # | Role | Company | Location | Posted | Via | Link | Query |",
     "| --- | --- | --- | --- | --- | --- | --- | --- |",

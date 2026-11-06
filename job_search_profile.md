@@ -57,7 +57,7 @@ Hybrid, on-site, and "remote" roles that require regular office days are ruled o
 - **Low:** meets the must-haves but is a weak match on role scope or industry.
 - **Out:** breaks a must-have (for example, not fully remote).
 - **Travel:** doesn't affect the score. Every lead notes its travel (for example, `Travel: up to 25%` or `Travel: not stated`) so you can decide. Travel for conferences, offsites and team gatherings is a plus.
-- **Driving:** a role that requires driving (a driver's license, "reliable transportation", or living within driving distance of clients or sites) scores **Medium at most**, unless the posting makes clear it can be done by public transit or rideshare.
+- **Driving:** a role that requires driving (a driver's license, "reliable transportation", or living within driving distance of clients or sites) scores **Medium at most**, unless the posting makes clear it can be done by public transit or rideshare. Start the lead's MatchReason with `Driving required:` so it stands out, and list it in the weekly report so you can override the cap.
 
 ## Open items
 

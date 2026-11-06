@@ -42,7 +42,7 @@ Find leads through `bun run find-jobs` first. It searches Google Jobs with Searc
 14. Read each candidate's `description` and `highlights` (Qualifications, Responsibilities) in `find_jobs_results/DATE.json` first. Open the posting link only when the description doesn't settle the checks below, or for leads that score High. Check:
     - **Role:** the responsibilities are post-sale and customer-facing (account ownership, adoption, renewals, technical escalations). If the role is mainly pre-sales, quota-carrying sales or implementation only, it's **Out**.
     - **Remote:** the posting says fully remote. If it requires regular office days or says hybrid, it's **Out**. If it's unclear, note "remote: unclear".
-    - **Travel and driving:** note how much travel the posting states, or "not stated". Travel doesn't change the score. If the role requires driving, it scores **Medium at most** (see the profile).
+    - **Travel and driving:** note how much travel the posting states, or "not stated". Travel doesn't change the score. If the role requires driving, it scores **Medium at most** (see the profile), and its MatchReason starts with `Driving required:`. Postings marked 🚗 in the find-jobs results mention driving; confirm whether it's actually required.
     - **Coding level** (CSE and other technical roles): from the requirements, note `Coding: config & troubleshooting`, `Coding: APIs & scripting` or `Coding: production code` (**Medium at most**), as the profile describes. Add any languages or tools the posting lists in parentheses, for example `Coding: APIs & scripting (Python, SQL)`.
 15. Score the leads that pass:
     - **High:** a target role, fully remote, and a target industry.
@@ -89,6 +89,7 @@ Find leads through `bun run find-jobs` first. It searches Google Jobs with Searc
     1. **Summary:** postings reviewed, leads added (High, Medium and Low counts), Out leads and their top reasons.
     2. **New High-fit leads:** company, role, a one-line reason, and the link.
     3. **Existing leads:** status changes, postings taken down, stale leads.
+    - **Capped for driving:** each lead scored Medium because it requires driving, with the reason, so the user can override it if transit or rideshare would work.
     4. **Drafts to review:** the file paths of this run's files in `outreach/`.
     5. **Top 3 actions this week:** specific, ordered by priority.
     6. **Questions for you:** missing profile items, unclear postings, decisions needed.
