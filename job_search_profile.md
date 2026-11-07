@@ -59,6 +59,10 @@ Hybrid, on-site, and "remote" roles that require regular office days are ruled o
 - **Travel:** doesn't affect the score. Every lead notes its travel (for example, `Travel: up to 25%` or `Travel: not stated`) so you can decide. Travel for conferences, offsites and team gatherings is a plus.
 - **Driving:** a role that requires driving (a driver's license, "reliable transportation", or living within driving distance of clients or sites) scores **Medium at most**, unless the posting makes clear it can be done by public transit or rideshare. Start the lead's MatchReason with `Driving required:` so it stands out, and list it in the weekly report so you can override the cap.
 
+- **Sales duties:** you want to be honest and present with customers. You're still learning what sales duties in post-sales roles are like, so they **don't affect the score** for now.
+  - Every lead notes what the posting says, for example `Sales: none stated`, `Sales: renewals, no quota stated`, `Sales: expansion quota` or `Sales: commission (80/20 split)`.
+  - When a role has sales duties, add a question for current employees about what it's like, for example "What are the upsell or renewal targets like day to day? Do you ever feel pressure to sell things customers don't need?"
+
 ## Open items
 
 - Seniority level
